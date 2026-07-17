@@ -4,7 +4,7 @@ from app.schemas.booking import Booking
 from app.services.google_sheet import save_booking, get_all_bookings, update_booking_status
 from app.services.email import send_customer_confirmation_email, send_admin_booking_email
 from app.services.whatsapp import send_whatsapp_customer_confirmation, send_whatsapp_admin_alert
-
+import traceback
 router = APIRouter()
 
 class StatusUpdate(BaseModel):
@@ -40,9 +40,12 @@ def create_booking(data: Booking):
             "whatsapp_url": wa_url
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to save booking: {str(e)}")
-
-
+        traceback.print_exc()   # Print full traceback in Render logs
+        print("ERROR:", repr(e))
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to save booking: {str(e)}"
+        )
 @router.get("/bookings")
 def fetch_bookings():
     try:

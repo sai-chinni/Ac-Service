@@ -36,8 +36,8 @@ def get_credentials():
     """
 
     google_credentials = os.getenv("GOOGLE_CREDENTIALS")
-    print(repr(google_credentials[:300]))
-
+    print("FIRST CHAR:", repr(google_credentials[0]))
+    print("LAST CHAR:", repr(google_credentials[-1]))
     if google_credentials:
         try:
             credentials_info = json.loads(

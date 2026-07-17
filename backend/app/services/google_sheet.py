@@ -39,7 +39,9 @@ def get_credentials():
 
     if google_credentials:
         try:
-            credentials_info = json.loads(google_credentials)
+            credentials_info = json.loads(
+            google_credentials.replace("\\n", "\n")
+        )
             return Credentials.from_service_account_info(
                 credentials_info,
                 scopes=SCOPES

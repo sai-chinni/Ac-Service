@@ -38,15 +38,24 @@ def get_credentials():
     google_credentials = os.getenv("GOOGLE_CREDENTIALS")
 
     if google_credentials:
-        credentials_info = json.loads(google_credentials)
+        try:
+            credentials_info = json.loads(google_credentials)
+            return Credentials.from_service_account_info(
+                credentials_info,
+                scopes=SCOPES
+            )
+        except Exception as e:
+            raise RuntimeError(f"Invalid GOOGLE_CREDENTIALS value: {e}")
 
-        return Credentials.from_service_account_info(
-            credentials_info,
-            scopes=SCOPES
+    # Fallback to service account file
+    creds_path = "credentials/credentials.json"
+    if not os.path.exists(creds_path):
+        raise RuntimeError(
+            "Google service account credentials not found. Set the environment variable 'GOOGLE_CREDENTIALS' with the JSON content or add the file 'credentials/credentials.json'."
         )
 
     return Credentials.from_service_account_file(
-        "credentials/credentials.json",
+        creds_path,
         scopes=SCOPES
     )
 
@@ -55,22 +64,27 @@ def get_sheet():
     global _sheet
 
     if _sheet is None:
-        credentials = get_credentials()
-        client = gspread.authorize(credentials)
-
-        _sheet = client.open_by_key(
-            "1BstIxenL_PcL2DafF2pZ7kRaMb0HDSiyew2y6XNXcS8"
-        ).sheet1
-
         try:
-            first_row = _sheet.row_values(1)
+            credentials = get_credentials()
+            client = gspread.authorize(credentials)
 
-            if not first_row or first_row[0] != "ID":
-                _sheet.clear()
-                _sheet.insert_row(HEADERS, 1)
+            _sheet = client.open_by_key(
+                "1BstIxenL_PcL2DafF2pZ7kRaMb0HDSiyew2y6XNXcS8"
+            ).sheet1
+
+            try:
+                first_row = _sheet.row_values(1)
+
+                if not first_row or first_row[0] != "ID":
+                    _sheet.clear()
+                    _sheet.insert_row(HEADERS, 1)
+
+            except Exception as e:
+                print(f"Error initializing sheet headers: {e}")
 
         except Exception as e:
-            print(f"Error initializing sheet headers: {e}")
+            # Provide a clear message that will show up in logs and can help debugging 503s
+            raise RuntimeError(f"Failed to access Google Sheet: {e}")
 
     return _sheet
 

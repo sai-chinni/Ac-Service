@@ -30,24 +30,22 @@ _sheet = None
 
 
 def get_credentials():
+    """
+    If GOOGLE_CREDENTIALS exists (Render),
+    use it. Otherwise use the local credentials.json file.
+    """
+
     google_credentials = os.getenv("GOOGLE_CREDENTIALS")
 
-    print("GOOGLE_CREDENTIALS exists:", google_credentials is not None)
-    print("GOOGLE_CREDENTIALS length:", len(google_credentials) if google_credentials else 0)
-
     if google_credentials:
-        print("First 100 chars:", repr(google_credentials[:100]))
-
         try:
             credentials_info = json.loads(
-                google_credentials.replace("\\n", "\n")
-            )
-
+            google_credentials.replace("\\n", "\n")
+        )
             return Credentials.from_service_account_info(
                 credentials_info,
-                scopes=SCOPES,
+                scopes=SCOPES
             )
-
         except Exception as e:
             raise RuntimeError(f"Invalid GOOGLE_CREDENTIALS value: {e}")
 

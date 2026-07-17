@@ -36,6 +36,7 @@ def get_credentials():
     """
 
     google_credentials = os.getenv("GOOGLE_CREDENTIALS")
+    print(repr(google_credentials[:300]))
 
     if google_credentials:
         try:

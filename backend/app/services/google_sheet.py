@@ -43,10 +43,10 @@ def get_credentials():
             credentials_info = json.loads(
             google_credentials.replace("\\n", "\n")
         )
-            return Credentials.from_service_account_info(
-                credentials_info,
+            return Credentials.from_service_account_file(
+             "/path/to/credentials.json",
                 scopes=SCOPES
-            )
+                )
         except Exception as e:
             raise RuntimeError(f"Invalid GOOGLE_CREDENTIALS value: {e}")
 

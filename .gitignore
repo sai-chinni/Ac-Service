@@ -1,0 +1,15 @@
+# Secrets
+backend/.env
+backend/credentials/
+.env
+*.json
+
+# Python
+backend/vene/
+backend/__pycache__/
+*.pyc
+**/__pycache__/
+
+# React
+ac-services-website/node_modules/
+ac-services-website/dist/

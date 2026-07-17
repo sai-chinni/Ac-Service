@@ -1,13 +1,9 @@
 # Secrets
-backend/.env
-backend/credentials/
+.env
+credentials/
 *.json
 
 # Python
-backend/vene/
-backend/__pycache__/
+vene/
+__pycache__/
 *.pyc
-
-# React
-ac-services-website/node_modules/
-ac-services-website/dist/

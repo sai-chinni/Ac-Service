@@ -47,8 +47,8 @@ const Hero = () => {
     };
 
     return (
-        <section 
-            id="home" 
+        <section
+            id="home"
             ref={heroRef}
             className="relative min-h-screen overflow-hidden bg-gradient-to-br from-sky-50 via-white to-blue-50/50 pt-28 pb-16 bg-grid-pattern"
         >
@@ -76,7 +76,7 @@ const Hero = () => {
                         </h1>
 
                         <p className="text-base md:text-lg leading-relaxed text-slate-600 max-w-xl animate-hero-up opacity-0">
-                            Chennai's premium AC technicians providing rapid repair, professional installation, refrigerant gas refilling, and reliable annual maintenance.
+                            Eluru's premium AC technicians providing rapid repair, professional installation, refrigerant gas refilling, and reliable annual maintenance.
                         </p>
                     </div>
 
@@ -100,12 +100,12 @@ const Hero = () => {
                             Book Service Online
                         </Button>
 
-                        <a 
+                        <a
                             href="tel:+919876543210"
                             className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-sm tracking-wide transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 hover:border-blue-700 shadow-sm cursor-pointer"
                         >
                             <FaPhoneAlt />
-                            Call +91 98765 43210
+                            Call +91 8790270881
                         </a>
                     </div>
 
@@ -137,7 +137,7 @@ const Hero = () => {
 
                 {/* RIGHT (5 Columns) */}
                 <div className="lg:col-span-5 relative flex justify-center mt-8 lg:mt-0">
-                    
+
                     {/* Glow Backing */}
                     <div className="absolute -inset-10 rounded-full bg-blue-400/20 blur-3xl animate-pulse-slow"></div>
 

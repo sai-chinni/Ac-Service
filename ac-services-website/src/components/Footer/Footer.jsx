@@ -190,7 +190,7 @@ const Footer = () => {
 
                                     <FaPhoneAlt className="text-blue-400" />
 
-                                    <span>+91 98765 43210</span>
+                                    <span>+91 8790270881</span>
 
                                 </div>
 

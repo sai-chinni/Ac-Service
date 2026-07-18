@@ -2,7 +2,8 @@
 backend/.env
 backend/credentials/
 .env
-*.json
+backend/credentials.json
+backend/service-account*.json
 
 # Python
 backend/vene/

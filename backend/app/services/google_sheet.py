@@ -36,17 +36,17 @@ def get_credentials():
     """
 
     google_credentials = os.getenv("GOOGLE_CREDENTIALS")
-    print("FIRST CHAR:", repr(google_credentials[0]))
-    print("LAST CHAR:", repr(google_credentials[-1]))
+
     if google_credentials:
         try:
-            credentials_info = json.loads(
-            google_credentials.replace("\\n", "\n")
-        )
-            return Credentials.from_service_account_file(
-             "/path/to/credentials.json",
+            # Parse the raw JSON FIRST — do not pre-replace \n on the whole string.
+            # The \n inside private_key are valid JSON escapes; json.loads handles them.
+            credentials_info = json.loads(google_credentials)
+
+            return Credentials.from_service_account_info(
+                credentials_info,
                 scopes=SCOPES
-                )
+            )
         except Exception as e:
             raise RuntimeError(f"Invalid GOOGLE_CREDENTIALS value: {e}")
 
@@ -54,14 +54,14 @@ def get_credentials():
     creds_path = "credentials/credentials.json"
     if not os.path.exists(creds_path):
         raise RuntimeError(
-            "Google service account credentials not found. Set the environment variable 'GOOGLE_CREDENTIALS' with the JSON content or add the file 'credentials/credentials.json'."
+            "Google service account credentials not found. Set the environment variable "
+            "'GOOGLE_CREDENTIALS' with the JSON content or add the file 'credentials/credentials.json'."
         )
 
     return Credentials.from_service_account_file(
         creds_path,
         scopes=SCOPES
     )
-
 
 def get_sheet():
     global _sheet
